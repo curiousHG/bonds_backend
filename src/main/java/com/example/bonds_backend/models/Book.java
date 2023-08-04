@@ -14,13 +14,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
-public class User {
-    @Id
+@Table(name = "book")
+public class Book {
+	@Id
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
     private Long id;
-
-    private String name;
-    private String email;
-    private String role;
+    private String BOOK_NAME;
 }
