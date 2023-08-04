@@ -33,4 +33,9 @@ public class UserController {
     public List<User> getAll(){
         return repository.findAll();
     }
+
+    @PostMapping("/signin")
+    private String signin(@RequestBody User user){
+        return "this is Sign in API";
+    }
 }
