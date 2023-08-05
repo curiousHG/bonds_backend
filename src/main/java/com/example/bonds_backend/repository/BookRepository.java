@@ -1,12 +1,11 @@
 package com.example.bonds_backend.repository;
 
-import com.example.bonds_backend.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.bonds_backend.models.Book;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-
-
+public interface BookRepository extends JpaRepository<Book, Long> {
+    
 }
