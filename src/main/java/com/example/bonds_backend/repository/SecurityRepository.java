@@ -18,5 +18,12 @@ public interface SecurityRepository extends JpaRepository<Security, Long> {
 
     List<Security> findByUserId(long userId);
 
+    Security findByISIN(String ISIN);
+
+    @Query(value = "SELECT *" +
+        " FROM security s" +
+        " WHERE s.maturity_date BETWEEN ?1 AND ?2", nativeQuery = true)
+    List<Security> findByDateRange(String startDate, String endDate);
+
 }
 
