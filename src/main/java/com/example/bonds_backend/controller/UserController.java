@@ -1,7 +1,11 @@
 package com.example.bonds_backend.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,15 +25,10 @@ public class UserController {
 
     @Autowired
     UserRepository repository;
-
-    @GetMapping("/hello")
-    public String hello(){
-        return "Hello World";
-    }
+    
     @PostMapping("/addUser")
-    public String saveUser(@RequestBody User user){
-        repository.save(user);
-        return "Added user with id: " + user.getId();
+    public ResponseEntity<Object> saveUser(@RequestBody User user){
+        return ResponseEntity.ok(repository.save(user));
     }
 
     @GetMapping("/getAllUsers")
@@ -38,8 +37,12 @@ public class UserController {
     }
 
     @GetMapping("/getUserById/{id}")
-    private User getById(@PathVariable long id){
-        return repository.findById(id).orElse(null);
+    private ResponseEntity<Object> getById(@PathVariable long id){
+        Optional<User> user = repository.findById(id);
+        if(user == null || user.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Security not found");
+        }
+        return ResponseEntity.ok(user.get());
     }
 
     @DeleteMapping("/deleteUser/{id}")
