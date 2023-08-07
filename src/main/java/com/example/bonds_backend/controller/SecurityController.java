@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
 import com.example.bonds_backend.models.Security;
+import com.example.bonds_backend.models.Trade;
 import com.example.bonds_backend.repository.SecurityRepository;
 
 
@@ -36,7 +37,7 @@ public class SecurityController {
     public ResponseEntity<Object> getById(@PathVariable long id){
         Optional<Security> securities = securityRepository.findById(id);
         if (securities.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Security not found");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Security not found");
         }
         return ResponseEntity.ok(securities.get());
     }
@@ -50,14 +51,15 @@ public class SecurityController {
         return ResponseEntity.ok(securities);
     }
 
-    @GetMapping("/getTradesBySecurity/")
-    public ResponseEntity<Object> getTradesBySecurity(@RequestBody Security security){
-        Security foundSecurity= securityRepository.findByISIN(security.getISIN());
+    @GetMapping("/getTradesBySecurity/{id}")
+    public ResponseEntity<Object> getTradesBySecurity(@PathVariable long id){
+        Security foundSecurity= securityRepository.findById(id).orElse(null);
         if (foundSecurity == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Security not found");
         }
-        // #TODO: get trades by security
-        return ResponseEntity.ok().build();
+        List<Object> trades = securityRepository.findBySecurityId(foundSecurity.getId());
+
+        return ResponseEntity.ok(trades);
     }
 
     @PostMapping("/getSecurityByDateRange")
