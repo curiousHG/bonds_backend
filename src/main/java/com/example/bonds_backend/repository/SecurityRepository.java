@@ -26,8 +26,8 @@ public interface SecurityRepository extends JpaRepository<Security, Long> {
         " WHERE s.maturity_date BETWEEN ?1 AND ?2", nativeQuery = true)
     List<Security> findByDateRange(String startDate, String endDate);
 
-    @Query(value = "SELECT t.* FROM trade t WHERE t.security_id = ?1", nativeQuery = true)
-    List<Object> findBySecurityId(long securityId);
+    @Query("SELECT t FROM Trade t WHERE t.security.id = ?1")
+    List<Trade> findTradeBySecurityId_Id(long securityId);
 
 
 }

@@ -21,6 +21,7 @@ import com.example.bonds_backend.models.Trade;
 import com.example.bonds_backend.repository.SecurityRepository;
 
 
+
 @RestController
 @RequestMapping("/api/v1")
 public class SecurityController {
@@ -52,15 +53,17 @@ public class SecurityController {
     }
 
     @GetMapping("/getTradesBySecurity/{id}")
-    public ResponseEntity<Object> getTradesBySecurity(@PathVariable long id){
-        Security foundSecurity= securityRepository.findById(id).orElse(null);
+    public ResponseEntity<Object> getTradesBySecurity(@PathVariable long id) {
+        Security foundSecurity = securityRepository.findById(id).orElse(null);
         if (foundSecurity == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Security not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Security not found");
         }
-        List<Object> trades = securityRepository.findBySecurityId(foundSecurity.getId());
+        
+        List<Trade> trades = securityRepository.findTradeBySecurityId_Id(foundSecurity.getId());
 
         return ResponseEntity.ok(trades);
     }
+
 
     @PostMapping("/getSecurityByDateRange")
     public ResponseEntity<Object> getByDateRange(@RequestBody Map<String, String> dates){
