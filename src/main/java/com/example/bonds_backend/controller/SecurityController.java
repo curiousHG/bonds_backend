@@ -9,6 +9,7 @@ import org.apache.logging.log4j.simple.SimpleLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,17 +25,20 @@ import com.example.bonds_backend.repository.SecurityRepository;
 
 @RestController
 @RequestMapping("/api/v1")
+
 public class SecurityController {
     
     @Autowired
     private SecurityRepository securityRepository;
 
     @GetMapping("/getAllSecurities")
+    @CrossOrigin(origins = "*")
     public List<Security> getAll(){
         return securityRepository.findAll();
     }
 
     @GetMapping("/getSecurityById/{id}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> getById(@PathVariable long id){
         Optional<Security> securities = securityRepository.findById(id);
         if (securities.isEmpty()) {
@@ -44,6 +48,7 @@ public class SecurityController {
     }
 
     @GetMapping("/getSecurityByUserId/{userId}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> getByUserId(@PathVariable long userId){
         List<Security> securities= securityRepository.findByUserId(userId);
         if (securities.isEmpty()) {
@@ -53,6 +58,7 @@ public class SecurityController {
     }
 
     @GetMapping("/getTradesBySecurity/{id}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> getTradesBySecurity(@PathVariable long id) {
         Security foundSecurity = securityRepository.findById(id).orElse(null);
         if (foundSecurity == null) {
@@ -66,6 +72,7 @@ public class SecurityController {
 
 
     @PostMapping("/getSecurityByDateRange")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> getByDateRange(@RequestBody Map<String, String> dates){
         String startDate = dates.get("startDate");
         String endDate = dates.get("endDate");
@@ -74,6 +81,7 @@ public class SecurityController {
     }
 
     @PostMapping(value="/createSecurity")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> postMethodName(@RequestBody Security security) {
         if(securityRepository.findByISIN(security.getISIN()) != null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Security with ISIN "+ security.getISIN()+" already exists");
@@ -93,6 +101,7 @@ public class SecurityController {
     }
 
     @PostMapping(value="/updateSecurity")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> updateMethodName(@RequestBody Security security) {
         if (security.getISIN() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing ISIN");
@@ -113,6 +122,7 @@ public class SecurityController {
     }
 
     @PostMapping(value="/deleteSecurity")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> deleteMethodName(@RequestBody Security security) {
         if (security.getISIN() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing ISIN");
