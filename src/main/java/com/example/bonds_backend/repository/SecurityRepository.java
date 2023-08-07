@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.bonds_backend.models.Security;
+import com.example.bonds_backend.models.Trade;
 import org.springframework.data.jpa.repository.Query;
 
 public interface SecurityRepository extends JpaRepository<Security, Long> {
 
     
-    @Query(value = "SELECT *" +
+    @Query(value = "SELECT s.*" +
         " FROM security s" +
         " JOIN trade t ON s.id = t.security_id" +
         " JOIN book_user bu ON t.book_id = bu.book_id" +
@@ -20,10 +21,14 @@ public interface SecurityRepository extends JpaRepository<Security, Long> {
 
     Security findByISIN(String ISIN);
 
-    @Query(value = "SELECT *" +
+    @Query(value = "SELECT s.*" +
         " FROM security s" +
         " WHERE s.maturity_date BETWEEN ?1 AND ?2", nativeQuery = true)
     List<Security> findByDateRange(String startDate, String endDate);
+
+    @Query(value = "SELECT t.* FROM trade t WHERE t.security_id = ?1", nativeQuery = true)
+    List<Object> findBySecurityId(long securityId);
+
 
 }
 
