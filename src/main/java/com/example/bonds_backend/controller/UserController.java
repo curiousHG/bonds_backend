@@ -48,6 +48,18 @@ public class UserController {
         return ResponseEntity.ok(user.get());
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody User user) {
+       
+        if ("username".equals(user.getEmail()) && "password".equals(user.getPassword())) {
+            // Authentication successful
+            return ResponseEntity.ok("Login successful");
+        } else {
+            // Authentication failed
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+    }
+
     @DeleteMapping("/deleteUser/{id}")
     @CrossOrigin(origins = "*")
     private String deleteUser(@PathVariable long id){
@@ -61,6 +73,7 @@ public class UserController {
         User user = repository.findById(id).orElse(null);
         if(user != null){
             user.setName(updatedUser.getName());
+            user.setPhoto(updatedUser.getPhoto());
             user.setEmail(updatedUser.getEmail());
             repository.save(user);
             return user;
