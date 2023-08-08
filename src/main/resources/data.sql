@@ -2,13 +2,13 @@ INSERT INTO BOOK (id, BOOK_NAME) VALUES (1, 'Introduction to AI');
 INSERT INTO BOOK (id, BOOK_NAME) VALUES (2, 'Database Management');
 INSERT INTO BOOK (id, BOOK_NAME) VALUES (3, 'Data Structures');
 
-INSERT INTO users (id, name, email, role)
+INSERT INTO users (id, name, email, photo, password, role)
 VALUES
-    (101, 'John Doe', 'john.doe@email.com', 'Regular User'),
-    (102, 'Jane Smith', 'jane.smith@email.com', 'Admin'),
-    (103, 'Mike Brown', 'mike.brown@email.com', 'Regular User'),
-    (104, 'Emily Lee', 'emily.lee@email.com', 'Regular User'),
-    (105, 'Alex Chen', 'alex.chen@email.com', 'Regular User');
+    (101, 'John Doe', 'john.doe@email.com', 'test', 'test', 'Regular User'),
+    (102, 'Jane Smith', 'jane.smith@email.com', 'test','test','Admin'),
+    (103, 'Mike Brown', 'mike.brown@email.com', 'test','test','Regular User'),
+    (104, 'Emily Lee', 'emily.lee@email.com', 'test','test','Regular User'),
+    (105, 'Alex Chen', 'alex.chen@email.com', 'test','test','Regular User');
 
 INSERT INTO book_user (book_id, user_id)
 VALUES
