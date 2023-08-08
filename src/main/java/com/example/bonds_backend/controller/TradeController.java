@@ -1,14 +1,17 @@
 package com.example.bonds_backend.controller;
 
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.bonds_backend.models.BookUser;
+import com.example.bonds_backend.models.Security;
 import com.example.bonds_backend.models.Trade;
 import com.example.bonds_backend.repository.TradeRepository;
 
@@ -85,6 +88,12 @@ public class TradeController {
 
         return ResponseEntity.ok(tradeDetails.getSecurity());
 
+    }
+
+    @GetMapping("/getAllTrades")
+    @CrossOrigin(origins = "*")
+    public List<Trade> getAll(){
+        return tradeRepo.findAll();
     }
 
 
