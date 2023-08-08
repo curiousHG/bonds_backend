@@ -33,6 +33,6 @@ VALUES
     
 INSERT INTO trade (id, book_id, counter_party_id, security_id, quantity, status, price, buy_sell, trade_date, settlement_date)
 VALUES
-    (1, 1, 201, 301, 100, 'Completed', 50.00, 'Buy', '2023-08-01', '2023-08-05'),
-    (2, 2, 202, 302, 50, 'Pending', 75.25, 'Sell', '2023-08-02', '2023-08-06'),
-    (3, 3, 203, 303, 200, 'Completed', 30.80, 'Buy', '2023-08-03', '2023-08-07');
+    (1001, 1, 201, 301, 100, 'Completed', 50.00, 'Buy', '2023-08-01', '2023-08-05'),
+    (1002, 2, 202, 302, 50, 'Pending', 75.25, 'Sell', '2023-08-02', '2023-08-06'),
+    (1003, 3, 203, 303, 200, 'Completed', 30.80, 'Buy', '2023-08-03', '2023-08-07');
