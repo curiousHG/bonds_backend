@@ -29,6 +29,7 @@ public class TradeController {
     private TradeRepository tradeRepo;
 
     @GetMapping("/getTradeById/{id}")
+    @CrossOrigin(origins = "*")
    public ResponseEntity<Object> getById(@PathVariable long id){
             Optional<Trade> tradeDetails = tradeRepo.findById(id);
 
@@ -41,11 +42,13 @@ public class TradeController {
 
 
     @PostMapping("/saveTrade")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> createNewTrade(@RequestBody Trade tradeDetails){
        return ResponseEntity.ok(tradeRepo.save(tradeDetails));
     }
 
     @PostMapping("/updateTrade/{id}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> updateTradeDetails(@PathVariable Long id, @RequestBody Trade tradeDetails){
 
         Trade existingTrade = tradeRepo.findById(id).orElse(null);
@@ -71,6 +74,7 @@ public class TradeController {
     }
 
     @GetMapping("/getTradeSecurity/{id}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> getSecurtiy(@PathVariable Long id){
 
         Trade tradeDetails = tradeRepo.findById(id).orElse(null);
