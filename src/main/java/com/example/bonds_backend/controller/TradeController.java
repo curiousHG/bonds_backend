@@ -72,13 +72,13 @@ public class TradeController {
     @GetMapping("/getTradeSecurity/{id}")
     public ResponseEntity<Object> getSecurtiy(@PathVariable Long id){
 
-        Trade existingTrade = tradeRepo.findById(id).orElse(null);
+        Trade tradeDetails = tradeRepo.findById(id).orElse(null);
 
-        if(existingTrade.equals(null)){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing ISIN");
+        if(tradeDetails.equals(null)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No such trade exists.");
         }
 
-        return ResponseEntity.ok(existingTrade.getSecurity());
+        return ResponseEntity.ok(tradeDetails.getSecurity());
 
     }
 
