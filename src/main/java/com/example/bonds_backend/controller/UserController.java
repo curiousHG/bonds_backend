@@ -2,6 +2,7 @@ package com.example.bonds_backend.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
+import com.example.bonds_backend.repository.BookUserRepository;
+import com.example.bonds_backend.repository.TradeRepository;
 import com.example.bonds_backend.repository.UserRepository;
+import com.example.bonds_backend.models.BookUser;
+import com.example.bonds_backend.models.Trade;
 import com.example.bonds_backend.models.User;
 
 
@@ -26,7 +32,13 @@ public class UserController {
 
     @Autowired
     UserRepository repository;
+
+    @Autowired
+    BookUserRepository bookUserRepository;
     
+    @Autowired
+    private TradeRepository tradeRepo;
+
     @PostMapping("/addUser")
     public ResponseEntity<Object> saveUser(@RequestBody User user){
         return ResponseEntity.ok(repository.save(user));
@@ -87,4 +99,18 @@ public class UserController {
     private String signin(@RequestBody User user){
         return "this is Sign in API";
     }
+
+    @GetMapping("/getRecentTrades/{id}")
+    @CrossOrigin(origins = "*")
+    public List<Trade> getRecentTrades(@PathVariable long id){
+
+            List<BookUser> bookUserList = bookUserRepository.findByUser_Id(id);
+
+            List<Long> bookIds = bookUserList.stream()
+                .map(bookUser -> bookUser.getBook().getId())
+                .collect(Collectors.toList());
+
+            return tradeRepo.findByBookIdIn(bookIds);
+    }
+
 }
