@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.bonds_backend.models.Security;
+
 import com.example.bonds_backend.models.Trade;
 import com.example.bonds_backend.repository.TradeRepository;
 
