@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.bonds_backend.models.Security;
 import com.example.bonds_backend.models.Trade;
 import com.example.bonds_backend.repository.TradeRepository;
 
@@ -27,25 +28,29 @@ public class TradeController {
     private TradeRepository tradeRepo;
 
     @GetMapping("/getTradeById/{id}")
-    public Trade getById(@PathVariable long id){
-            Trade tradeDetails = tradeRepo.findById(id).orElse(null);
+   public ResponseEntity<Object> getById(@PathVariable long id){
+            Optional<Trade> tradeDetails = tradeRepo.findById(id);
 
-            return tradeDetails;
+            if(tradeDetails.isEmpty()){
+               return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Security not found");
+            }
+
+            return ResponseEntity.ok(tradeDetails.get());
     }
 
+
     @PostMapping("/saveTrade")
-    public String createNewTrade(@RequestBody Trade tradeDetails){
-        tradeRepo.save(tradeDetails);
-        return "Added a New Trade";
+    public ResponseEntity<Object> createNewTrade(@RequestBody Trade tradeDetails){
+       return ResponseEntity.ok(tradeRepo.save(tradeDetails));
     }
 
     @PostMapping("/updateTrade/{id}")
-    public String updateTradeDetails(@PathVariable Long id, @RequestBody Trade tradeDetails){
+    public ResponseEntity<Object> updateTradeDetails(@PathVariable Long id, @RequestBody Trade tradeDetails){
 
         Trade existingTrade = tradeRepo.findById(id).orElse(null);
 
         if(existingTrade.equals(null)){
-            return "No such trade exists. Please retry.";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing ISIN");
         }
 
         existingTrade.setPrice(tradeDetails.getPrice());
@@ -60,10 +65,22 @@ public class TradeController {
 
         tradeRepo.save(existingTrade);
 
-        return "Successfully Updated.";
+        return ResponseEntity.ok(existingTrade);
         
     }
 
+    @GetMapping("/getTradeSecurity/{id}")
+    public ResponseEntity<Object> getSecurtiy(@PathVariable Long id){
+
+        Trade existingTrade = tradeRepo.findById(id).orElse(null);
+
+        if(existingTrade.equals(null)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing ISIN");
+        }
+
+        return ResponseEntity.ok(existingTrade.getSecurity());
+
+    }
 
 
 }
