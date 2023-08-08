@@ -132,10 +132,16 @@ public class SecurityController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Security with ISIN " + security.getISIN() + " not found");
         }
 
-        // #TODO: check if security has trades to it
-        // If so dont delete it
-        
-        securityRepository.delete(existingSecurity);
+        // List<Trade> trades = securityRepository.findTradeBySecurityId_Id(existingSecurity.getId());
+
+        // if (trades.size() > 0) {
+        //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Security with ISIN " + security.getISIN() + " has trades");
+        // }
+        // securityRepository.delete(existingSecurity);
+        securityRepository.deleteSecurity(existingSecurity.getId());
+
+        // check if security has trades to it
+
         return ResponseEntity.ok("Security with ISIN " + security.getISIN() + " deleted");
     }
 }

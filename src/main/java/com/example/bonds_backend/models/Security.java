@@ -6,11 +6,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+
 import javax.persistence.GeneratedValue;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
@@ -18,7 +22,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "security")
-
+// ondelete set status to inactive
+@OnDelete(action = OnDeleteAction.NO_ACTION)
 public class Security {
 	
 	@Id
@@ -47,6 +52,7 @@ public class Security {
     private double faceValue;
 
     @Column(nullable = false)
+    // #TODO: set default value to active and on delete change to inactive
     private String status;
 
 }
