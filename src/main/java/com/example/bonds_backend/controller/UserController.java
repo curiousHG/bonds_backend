@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.bonds_backend.repository.BookUserRepository;
 import com.example.bonds_backend.repository.TradeRepository;
@@ -40,7 +40,16 @@ public class UserController {
     private TradeRepository tradeRepo;
 
     @PostMapping("/addUser")
-    public ResponseEntity<Object> saveUser(@RequestBody User user){
+    public ResponseEntity<Object> saveUser(@RequestParam("name") String name,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password,
+            @RequestParam("role") String role){
+                
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setRole(role);
         return ResponseEntity.ok(repository.save(user));
     }
 
@@ -85,7 +94,6 @@ public class UserController {
         User user = repository.findById(id).orElse(null);
         if(user != null){
             user.setName(updatedUser.getName());
-            user.setPhoto(updatedUser.getPhoto());
             user.setEmail(updatedUser.getEmail());
             repository.save(user);
             return user;

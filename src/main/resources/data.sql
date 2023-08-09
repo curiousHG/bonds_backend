@@ -2,13 +2,13 @@ INSERT INTO BOOK (id, BOOK_NAME) VALUES (1, 'Introduction to AI');
 INSERT INTO BOOK (id, BOOK_NAME) VALUES (2, 'Database Management');
 INSERT INTO BOOK (id, BOOK_NAME) VALUES (3, 'Data Structures');
 
-INSERT INTO users (id, name, email, photo, password, role)
+INSERT INTO users (id, name, email, password, role)
 VALUES
-    (101, 'John Doe', 'john.doe@email.com', 'test', 'test', 'Regular User'),
-    (102, 'Jane Smith', 'jane.smith@email.com', 'test','test','Admin'),
-    (103, 'Mike Brown', 'mike.brown@email.com', 'test','test','Regular User'),
-    (104, 'Emily Lee', 'emily.lee@email.com', 'test','test','Regular User'),
-    (105, 'Alex Chen', 'alex.chen@email.com', 'test','test','Regular User');
+    (101, 'John Doe', 'john.doe@email.com', 'test', 'Regular User'),
+    (102, 'Jane Smith', 'jane.smith@email.com','test','Admin'),
+    (103, 'Mike Brown', 'mike.brown@email.com', 'test','Regular User'),
+    (104, 'Emily Lee', 'emily.lee@email.com', 'test','Regular User'),
+    (105, 'Alex Chen', 'alex.chen@email.com', 'test','Regular User');
 
 INSERT INTO book_user (book_id, user_id)
 VALUES
@@ -20,7 +20,7 @@ VALUES
 
 INSERT INTO security (id, ISIN, CUSIP, issuer, maturity_date, coupon, type, face_value, status)
 VALUES
-    (301, 'US1234567890', '1234567890', 'ABC Corp', '2025-12-31', 4.50, 'Bond', 1000, 'Active'),
+    (301, 'US1234567890', '1234567890', 'ABC Corp', '2023-02-13', 4.50, 'Bond', 1000, 'Active'),
     (302, 'US0987654321', '0987654321', 'XYZ Inc', '2028-06-30', 2.75, 'Stock', 600, 'Active'),
     (303, 'US9876543210', '9876543210', 'DEF Ltd', '2030-03-15', 3.20, 'Bond', 500, 'Inactive');
 
